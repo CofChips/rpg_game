@@ -53,66 +53,13 @@ function fillCharacter(){
     selectedChar = true
 }
 
-let Naruto = `
-<div class="col-lg-3 col-md-6 m-auto">
-                <div class="card character" id="NarutoSelect">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                      <img src="https://vignette.wikia.nocookie.net/naruto/images/0/09/Naruto_newshot.png/revision/latest/scale-to-width-down/300?cb=20170621101134" alt="Naruto" style="width: 100%"/>
-                      <p>Health: <span id="narutoHealth"></span></p>
-                      <div>
-                      <button type="button" class="btn btn-success" style="visibility: hidden" id="narutoAttack" >Attack</button>
-                      </div>
-                    </div>
-                  </div>
-        </div>
+function updateHealthChar(){
+    $("#characterHealth").text(character.health)
+}
 
-`
-
-let Itachi = `
-<div class="col-lg-3 col-md-6 m-auto">
-                <div class="card character" id="ItachiSelect">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                      <img src="https://vignette.wikia.nocookie.net/naruto/images/b/bb/Itachi.png/revision/latest/scale-to-width-down/300?cb=20160125182202" alt="Itachi" style="width: 100%"/>
-                      
-                      <p>Health: <span id="itachiHealth"></span></p>
-                      <button type="button" class="btn btn-success" style="visibility: hidden" id="itachiAttack">Attack</button>
-                    </div>
-                  </div>
-            </div>
-`
-
-let Rock = `
-<div class="col-lg-3 col-md-6 m-auto">
-                <div class="card character" id="RockSelect">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                      <img src="https://vignette.wikia.nocookie.net/naruto/images/9/97/Rock_Lee_Part_I.png/revision/latest/scale-to-width-down/300?cb=20181229065526" alt="Rock" style="width: 100%"/>
-                      
-                      <p>Health: <span id="rockHealth"></span></p>
-                      <button type="button" class="btn btn-success" style="visibility: hidden" id="rockAttack">Attack</button>
-                    </div>
-                  </div>
-            </div>
-`
-
-let Sakura = `
-<div class="col-lg-3 col-md-6 m-auto">
-                <div class="card character" id="SakuraSelect">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                      <img src="https://vignette.wikia.nocookie.net/naruto/images/6/64/Sakura_Part_1.png/revision/latest/scale-to-width-down/300?cb=20170726101444" alt="Sakura" style="width: 100%"/>
-                      <p>Health: <span id="sakuraHealth"></span></p>
-                      <button type="button" class="btn btn-success" style="visibility: hidden" id="sakuraAttack">Attack</button>
-                    </div>
-                  </div>
-            </div>
-`
+function updateHealthOpp(){
+    $("#opponentHealth").text(opponent.health)
+}
 
 let Opponent = `
 <div class="col-lg-3 col-md-6 m-auto">
@@ -150,6 +97,7 @@ let Character = `
 $(document).on("click", ".character", function () {
     console.log($(this).attr("id"))
     if (selectedChar === false) {
+        $("#charTitle").attr("style","")
         switch ($(this).attr("id")) {
             case "Naruto":
                 character = naruto
@@ -174,6 +122,7 @@ $(document).on("click", ".character", function () {
         $(this).attr("style", "visibility: hidden")
     }
     else if (selectedChar === true && selectedOpp === false) {
+        $("#oppTitle").attr("style","")
         switch ($(this).attr("id")) {
             case "Naruto":
                 opponent = naruto
@@ -206,9 +155,16 @@ $(document).on("click", ".character", function () {
         // $(this).attr("style", "visibility: hidden")
     }
 
-    $(document).on("click", "button", function () {
-        console.log("Button")
-    })
+    
+})
+
+$(document).on("click", "button", function () {
+    console.log("attack: ",character.attack)
+    opponent.health -= character.attack
+    character.health -= opponent.counter
+    character.attack += character.attack 
+    updateHealthOpp();
+    updateHealthChar();
 })
 
 
