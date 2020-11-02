@@ -5,24 +5,42 @@ let naruto = {
     health: 500,
     attack: 25,
     counter: 15,
+    image: "https://vignette.wikia.nocookie.net/naruto/images/0/09/Naruto_newshot.png/revision/latest/scale-to-width-down/300?cb=20170621101134",
+    alt: "Naruto"
 }
 
 let itachi = {
     health: 450,
     attack: 20,
     counter: 20,
+    image:"https://vignette.wikia.nocookie.net/naruto/images/b/bb/Itachi.png/revision/latest/scale-to-width-down/300?cb=20160125182202",
+    alt:"Itachi"
 }
 
 let rock = {
     health: 350,
     attack: 18,
     counter: 15,
+    image:"https://vignette.wikia.nocookie.net/naruto/images/9/97/Rock_Lee_Part_I.png/revision/latest/scale-to-width-down/300?cb=20181229065526",
+    alt:"Rock"
 }
 
 let sakura = {
     health: 300,
     attack: 30,
     counter: 25,
+    image:"https://vignette.wikia.nocookie.net/naruto/images/6/64/Sakura_Part_1.png/revision/latest/scale-to-width-down/300?cb=20170726101444",
+    alt:"Sakura"
+}
+
+let opponent;
+
+function fill(){
+    $("#selectionOpp").append(Opponent);
+    $("#opponentImage").attr("src",opponent.image)
+    $("#opponentImage").attr("alt",opponent.alt)
+    $("#opponentHealth").text(opponent.health)
+    selectedOpp = true
 }
 
 let Naruto = `
@@ -86,6 +104,23 @@ let Sakura = `
             </div>
 `
 
+let Opponent = `
+<div class="col-lg-3 col-md-6 m-auto">
+                <div class="card character" id="opponent">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                      <img src="#" alt="#" style="width: 100%" id="opponentImage"/>
+                      <p>Health: <span id="opponentHealth"></span></p>
+                      <div>
+                      <button type="button" class="btn btn-success" style="visibility: hidden" id="opponentAttack" >Attack</button>
+                      </div>
+                    </div>
+                  </div>
+        </div>
+
+`
+
 $(document).on("click", ".character", function () {
     console.log($(this).attr("id"))
     if (selectedChar === false) {
@@ -119,32 +154,28 @@ $(document).on("click", ".character", function () {
     else if (selectedChar === true && selectedOpp === false) {
         switch ($(this).attr("id")) {
             case "Naruto":
-                $("#selectionOpp").append(Naruto);
+                opponent = naruto
                 $("#yourOpp").text($(this).attr("id"));
-                $("#narutoHealth").text(sakura.health)
-                selectedOpp = true
                 $(this).attr("style", "visibility: hidden")
+                fill()
                 break;
             case "Itachi":
-                $("#selectionOpp").append(Itachi);
+                opponent = itachi
                 $("#yourOpp").text($(this).attr("id"));
-                $("#itachiHealth").text(sakura.health)
-                selectedOpp = true
                 $(this).attr("style", "visibility: hidden")
+                fill()
                 break;
             case "Rock":
-                $("#selectionOpp").append(Rock)
-                $("#yourOpp").text($(this).attr("id"))
-                $("#rockHealth").text(sakura.health)
-                selectedOpp = true
+                opponent = rock
+                $("#yourOpp").text($(this).attr("id"));
                 $(this).attr("style", "visibility: hidden")
+                fill()
                 break;
             case "Sakura":
-                $("#selectionOpp").append(Sakura)
-                $("#yourOpp").text($(this).attr("id"))
-                $("#sakuraHealth").text(sakura.health)
-                selectedOpp = true
+                opponent = sakura
+                $("#yourOpp").text($(this).attr("id"));
                 $(this).attr("style", "visibility: hidden")
+                fill()
                 break;
         }
 
@@ -153,6 +184,9 @@ $(document).on("click", ".character", function () {
         // $(this).attr("style", "visibility: hidden")
     }
 
+    $(document).on("click", "button", function () {
+        console.log("Button")
+    })
 })
 
 
